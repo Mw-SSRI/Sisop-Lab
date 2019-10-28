@@ -1,0 +1,27 @@
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+int main(void){
+int x = fork();
+if (x < 0){                                                                                                             
+  perror("Errore nella fork:"); 
+  exit(1);
+}
+ 
+ if(x == 0) {
+    while (1) printf("Processo figlio 1 (x == %d)\n", x);
+ } else {
+    int y = fork();
+    if (y < 0) {
+        perror("Fork 2 fallita");
+        exit(1);
+    }
+ 
+    if(y == 0) {
+        while (1) printf("Processo figlio 2 (x == %d, y == %d)\n",x,y);
+    } else {
+        while (1) printf("Processo genitore (x == %d, y == %d)\n",x,y);
+    }
+ } return 0;
+ 
+ }
